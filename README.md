@@ -47,3 +47,12 @@ npm install antd --save
 
 We can't forget to `import 'antd/dist/antd.css';` like we did with the RBC
 styles.
+
+- [ ] Document the addition of DnD and confirm that it breaks the event wrapper
+- [ ] Document approaches to making it work together
+  - https://github.com/intljusticemission/react-big-calendar/blob/master/src/addons/dragAndDrop/EventWrapper.js#L143
+  - Maybe instead of line 143 clone the event wrapper instance and prepend and append to its children
+- [ ] Update this issue when figured out https://github.com/intljusticemission/react-big-calendar/issues/377
+
+https://github.com/arecvlohe/rbc-with-dnd-starter/blob/master/src/App.js
+
