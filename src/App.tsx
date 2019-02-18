@@ -5,6 +5,12 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'antd/dist/antd.css';
 import { Popover } from 'antd';
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+
+// https://github.com/Microsoft/TypeScript/issues/15230
+const withDragAndDrop = require("react-big-calendar/lib/addons/dragAndDrop");
+
+const DragAndDropCalendar: typeof BigCalendar = withDragAndDrop(BigCalendar);
 
 type AppProps = {};
 
@@ -22,7 +28,7 @@ export default class App extends Component<AppProps, AppState> {
   public render() {
     return (
       <div className="App">
-        <BigCalendar
+        <DragAndDropCalendar
           localizer={this.localizer}
           events={this.state.events}
           defaultView="week"
