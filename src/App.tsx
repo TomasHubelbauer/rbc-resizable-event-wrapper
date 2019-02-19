@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import BigCalendar, { stringOrDate, DateLocalizer, Components, EventWrapperProps } from 'react-big-calendar';
+import BigCalendar, { stringOrDate, DateLocalizer, Components, EventWrapperProps, BigCalendarProps } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'antd/dist/antd.css';
@@ -11,7 +11,12 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 // import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
 const withDragAndDrop = require('react-big-calendar/lib/addons/dragAndDrop');
-const DragAndDropCalendar: typeof BigCalendar = true ? withDragAndDrop(BigCalendar) : BigCalendar;
+type DragAndDropCalendarProps = BigCalendarProps<{}, never> & {
+  onEventDrop: (args: { event: any, start: stringOrDate, end: stringOrDate, allDay: boolean }) => any;
+  onEventResize: (args: { event: any, start: stringOrDate, end: stringOrDate, allDay: boolean }) => any;
+};
+
+const DragAndDropCalendar: React.ComponentType<DragAndDropCalendarProps> = withDragAndDrop(BigCalendar);
 
 type AppProps = {};
 
@@ -38,6 +43,8 @@ export default class App extends Component<AppProps, AppState> {
           onSelectSlot={this.onCalendarSelectSlot}
           selectable
           components={this.components}
+          onEventDrop={this.onCalendarEventDrop}
+          onEventResize={this.onCalendarEventResize}
         />
       </div>
     );
@@ -46,25 +53,21 @@ export default class App extends Component<AppProps, AppState> {
   private readonly onCalendarSelectSlot = (slotInfo: { start: stringOrDate, end: stringOrDate, slots: Date[] | string[], action: 'select' | 'click' | 'doubleClick' }) => {
     this.setState(state => ({ events: [...state.events, { start: slotInfo.start, end: slotInfo.end }] }));
   };
-}
 
-class EventWrapperComponent extends React.Component<EventWrapperProps<{ start: Date, end: Date }>, never> {
-  public render() {
-    return (
-      <Popover content={JSON.stringify(this.props.event)}>
-        <div className="TEST">
-          {this.props.children}
-        </div>
-      </Popover>
-    );
-  }
+  private readonly onCalendarEventDrop = (args: { event: any, start: stringOrDate, end: stringOrDate, allDay: boolean }) => {
+    this.setState(state => ({ events: [...state.events.map(e => e === args.event ? { ...e, start: args.start, end: args.end } : e)] }));
+  };
+
+  private readonly onCalendarEventResize = (args: { event: any, start: stringOrDate, end: stringOrDate, allDay: boolean }) => {
+    this.setState(state => ({ events: [...state.events.map(e => e === args.event ? { ...e, start: args.start, end: args.end } : e)] }));
+  };
 }
 
 // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33188
 class EventComponent extends React.Component<EventWrapperProps<{ start: Date, end: Date }>, never> {
   public render() {
     return (
-      <Popover content={JSON.stringify(this.props)}>
+      <Popover content={JSON.stringify(this.props.event)} placement="right">
         <div style={{ height: '100%' }} />
       </Popover>
     );
