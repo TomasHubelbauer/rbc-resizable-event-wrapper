@@ -194,3 +194,5 @@ anyway so it works out that the whole slot `div` is covered so this is resolved.
 
 Now I'll wire up the resize and drag handlers of the DnD addon and call it a
 day.
+
+- [ ] https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33225
