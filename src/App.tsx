@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import BigCalendar, { stringOrDate, DateLocalizer, Components, EventWrapperProps, BigCalendarProps } from 'react-big-calendar';
+import BigCalendar, { stringOrDate, DateLocalizer, Components, BigCalendarProps, EventProps } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'antd/dist/antd.css';
@@ -28,9 +28,7 @@ export default class App extends Component<AppProps, AppState> {
   private readonly localizer: DateLocalizer = BigCalendar.momentLocalizer(moment);
 
   private readonly components: Components = {
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33188
     event: EventComponent as any,
-    //eventWrapper: EventWrapperComponent,
   };
 
   public render() {
@@ -63,8 +61,7 @@ export default class App extends Component<AppProps, AppState> {
   };
 }
 
-// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33188
-class EventComponent extends React.Component<EventWrapperProps<{ start: Date, end: Date }>, never> {
+class EventComponent extends React.Component<EventProps<{ start: Date, end: Date }>, never> {
   public render() {
     return (
       <Popover content={JSON.stringify(this.props.event)} placement="right">
