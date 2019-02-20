@@ -5,18 +5,12 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'antd/dist/antd.css';
 import { Popover } from 'antd';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
 // https://stackoverflow.com/q/54762077/2715716
-// import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-const withDragAndDrop = require('react-big-calendar/lib/addons/dragAndDrop');
-type DragAndDropCalendarProps = BigCalendarProps<{}, never> & {
-  onEventDrop: (args: { event: any, start: stringOrDate, end: stringOrDate, allDay: boolean }) => any;
-  onEventResize: (args: { event: any, start: stringOrDate, end: stringOrDate, allDay: boolean }) => any;
-};
-
-const DragAndDropCalendar: React.ComponentType<DragAndDropCalendarProps> = withDragAndDrop(BigCalendar);
+const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 type AppProps = {};
 
