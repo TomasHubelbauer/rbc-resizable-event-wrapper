@@ -1,5 +1,7 @@
 # React Big Calendar Resizable + Custom `EventWrapper` Component
 
+[**GitHub Pages**](https://tomashubelbauer.github.io/rbc-resizable-event-wrapper)
+
 In this repository I explore options for getting React Big Calendar to work
 together with the addon which adds handles for resizeability, but also without
 breaking the support for the custom `EventWrapper` component.
